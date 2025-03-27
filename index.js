@@ -37,6 +37,17 @@ app.get("/students", async (req, res) => {
     }
 });
 
+app.get("/student/:id", async (req, res) => {
+    try {
+        const student = await Student.findById(req.params.id);
+        if (!student) return res.status(404).send("Student Not Found");
+        res.render("student", { student });
+    } catch (error) {
+        res.status(500).send("Error fetching student");
+    }
+});
+
+
 app.get("/student/new", (req, res) => {
     res.render("new_student");
 });
