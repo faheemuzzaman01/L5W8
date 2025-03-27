@@ -24,9 +24,18 @@ const Student = mongoose.model("Student", studentSchema);
 
 
 app.get("/", (req, res) => {
-    // res.redirect("/students");
-    res.send("Hello from NCG");
+    res.redirect("/students");
 });
+
+app.get("/students", async (req, res) => {
+    try {
+        const students = await Student.find();
+        res.render("students", { students });
+    } catch (error) {
+        res.status(500).send("Error fetching students");
+    }
+});
+
 
 
 app.listen(3000,()=>{console.log("Server is up on port 3000")})
